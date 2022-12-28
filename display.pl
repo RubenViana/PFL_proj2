@@ -61,3 +61,10 @@ printSep(6) :- write('\n          \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\ / 8\n').
 printSep(7) :- write('\n            \\ / \\ / \\ / \\ / \\ / \\ / \\ / 7\n').
 printSep(8) :- write('\n              \\ / \\ / \\ / \\ / \\ / \\ / 6\n').
 printSep(9) :- write('\n                \\ / \\ / \\ / \\ / \\ /\n').
+
+
+printSelectedPieces(R1, C1, R2, C2, R3, C3) :-
+    write('> Selected Pieces:\n'),
+    write('Piece 1: '), write(R1), write('-'), write(C1),nl,
+    write('Piece 2: '), write(R2), write('-'), write(C2),nl,
+    write('Piece 3: '), write(R3), write('-'), write(C3),nl.

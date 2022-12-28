@@ -17,31 +17,31 @@ readColumn(Column) :-
     write('  > Column '),
     read(Column).
 
-validateRow('A', NewRow) :-
+validateRow(a, NewRow) :-
     NewRow = 8.
 
-validateRow('B', NewRow) :-
+validateRow(b, NewRow) :-
     NewRow = 7.
 
-validateRow('C', NewRow) :-
+validateRow(c, NewRow) :-
     NewRow = 6.
 
-validateRow('D', NewRow) :-
+validateRow(d, NewRow) :-
     NewRow = 5.
 
-validateRow('E', NewRow) :-
+validateRow(e, NewRow) :-
     NewRow = 4.
 
-validateRow('F', NewRow) :-
+validateRow(f, NewRow) :-
     NewRow = 3.
 
-validateRow('G', NewRow) :-
+validateRow(g, NewRow) :-
     NewRow = 2.
 
-validateRow('H', NewRow) :-
+validateRow(h, NewRow) :-
     NewRow = 1.
 
-validateRow('I', NewRow) :-
+validateRow(i, NewRow) :-
     NewRow = 0.
 
 validateRow(_Row, NewRow) :-
@@ -81,20 +81,28 @@ validateColumn(_Column, NewColumn) :-
     readColumn(Input),
     validateColumn(Input, NewColumn).
 
-validatePiece(Player, Row, Column, Board) :-
+validatePiece(Player, Row, Column, Board, N) :-
     getValueFromMatrix(Board, Row, Column, Value),
-    write(Player),
-    write(' -- '),
-    write(Value),nl.
+    (Value == Player; write('You can only select your pieces!\n'), manageRow(NewRow), manageColumn(NewColumn), validatePiece(Player, NewRow, NewColumn, Board, N)).
 
-askForPiece(Player, Board) :-
-    write('Piece 1 of 3:\n'),
+
+askForPiece(Player, Board, N, Row, Column) :-
+    write('Piece '), write(N), write(' of 3:\n'),
     manageRow(NewRow),
     manageColumn(NewColumn),
-    getValueFromMatrix(Board, NewRow, NewColumn, Value),
-    write(Value),nl.
+    validatePiece(Player, NewRow, NewColumn, Board, N),
+    Row is NewRow,
+    Column is NewColumn.
 
-%esta com erros a ler os inputs da Row e da Column !!
+askForMove(Player, Board).
+
+
+
+
+
+
+
+
 
 
 
