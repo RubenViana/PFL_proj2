@@ -63,8 +63,18 @@ printSep(8) :- write('\n              \\ / \\ / \\ / \\ / \\ / \\ / 6\n').
 printSep(9) :- write('\n                \\ / \\ / \\ / \\ / \\ /\n').
 
 
+toLetter(8, S) :- S = 'A'.
+toLetter(7, S) :- S = 'B'.
+toLetter(6, S) :- S = 'C'.
+toLetter(5, S) :- S = 'D'.
+toLetter(4, S) :- S = 'E'.
+toLetter(3, S) :- S = 'F'.
+toLetter(2, S) :- S = 'G'.
+toLetter(1, S) :- S = 'H'.
+toLetter(0, S) :- S = 'I'.
+
 printSelectedPieces(R1, C1, R2, C2, R3, C3) :-
-    write('> Selected Pieces:\n'),
-    write('Piece 1: '), write(R1), write('-'), write(C1),nl,
-    write('Piece 2: '), write(R2), write('-'), write(C2),nl,
-    write('Piece 3: '), write(R3), write('-'), write(C3),nl.
+    write('\nSelected Pieces:\n'),
+    write('  > Piece 1: '), toLetter(R1, S1), write(S1), write('-'), C_1 is C1 + 1, write(C_1),nl,
+    write('  > Piece 2: '), toLetter(R2, S2), write(S2), write('-'), C_2 is C2 + 1, write(C_2),nl,
+    write('  > Piece 3: '), toLetter(R3, S3), write(S3), write('-'), C_3 is C3 + 1, write(C_3),nl.

@@ -9,6 +9,25 @@ manageColumn(NewColumn) :-
     readColumn(Column),
     validateColumn(Column, NewColumn).
 
+manageMove(NewMove) :-
+    readMove(Move),
+    validateMove(Move, NewMove).
+
+readMove(Move) :-
+    write('  > Move   '),
+    read(Move).
+
+validateMove(l, NewMove) :-
+    NewMove = 'l'.
+
+validateMove(r, NewMove) :-
+    NewMove = 'r'.
+
+validateMove(_Move, NewMove) :-
+    write('ERROR: That move is not valid!\n\n'),
+    readMove(Input),
+    validateMove(Input, NewMove).
+
 readRow(Row) :-
     write('  > Row    '),
     read(Row).
@@ -81,20 +100,23 @@ validateColumn(_Column, NewColumn) :-
     readColumn(Input),
     validateColumn(Input, NewColumn).
 
-validatePiece(Player, Row, Column, Board, N) :-
+validatePiece(Player, Row, Column, Board, N, R, C) :-
     getValueFromMatrix(Board, Row, Column, Value),
-    (Value == Player; write('You can only select your pieces!\n'), manageRow(NewRow), manageColumn(NewColumn), validatePiece(Player, NewRow, NewColumn, Board, N)).
+    (Value == Player -> R is Row, C is Column ; write('\nYou can only select your pieces!\n'), write('Piece '), write(N), write(' of 3:\n'), manageRow(NewRow), manageColumn(NewColumn), validatePiece(Player, NewRow, NewColumn, Board, N, R, C)).
 
 
 askForPiece(Player, Board, N, Row, Column) :-
-    write('Piece '), write(N), write(' of 3:\n'),
+    write('\nPiece '), write(N), write(' of 3:\n'),
     manageRow(NewRow),
     manageColumn(NewColumn),
-    validatePiece(Player, NewRow, NewColumn, Board, N),
-    Row is NewRow,
-    Column is NewColumn.
+    validatePiece(Player, NewRow, NewColumn, Board, N, R, C),
+    Row is R,
+    Column is C.
 
-askForMove(Player, Board).
+askForMove(Move) :-
+    write('\nChoose move (Diagonal Right [r] / Diagonal Left [l]): \n'),
+    manageMove(NewMove),
+    Move = NewMove.
 
 
 
