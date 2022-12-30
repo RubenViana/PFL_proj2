@@ -73,8 +73,24 @@ toLetter(2, S) :- S = 'G'.
 toLetter(1, S) :- S = 'H'.
 toLetter(0, S) :- S = 'I'.
 
-printSelectedPieces(R1, C1, R2, C2, R3, C3) :-
-    write('\nSelected Pieces:\n'),
-    write('  > Piece 1: '), toLetter(R1, S1), write(S1), write('-'), C_1 is C1 + 1, write(C_1),nl,
-    write('  > Piece 2: '), toLetter(R2, S2), write(S2), write('-'), C_2 is C2 + 1, write(C_2),nl,
-    write('  > Piece 3: '), toLetter(R3, S3), write(S3), write('-'), C_3 is C3 + 1, write(C_3),nl.
+printSelectedPieces(Pieces) :-
+    write('             '),
+    (foreach( X, Pieces) do nth0(0, X, R), nth0(1, X, C), toLetter(R, S), write('  <'), write(S), write('-'), Cc is C + 1, write(Cc), write('>  ')),
+    write('\n\n').
+
+cls :- write('\33\[2J').
+
+printPlayerTurn('white', Pieces, Board) :-
+    cls,
+    printBoard(Board),
+    write('\n--------------------- PLAYER O ---------------------\n'),
+    write('                   (White Pieces)                   \n\n'),
+    printSelectedPieces(Pieces).
+
+    
+printPlayerTurn('black', Pieces, Board) :-
+    cls,
+    printBoard(Board),
+    write('\n--------------------- PLAYER X ---------------------\n'),
+    write('                   (Black Pieces)                   \n\n'),
+    printSelectedPieces(Pieces).

@@ -1,4 +1,5 @@
 mainMenu :-
+    cls,
     printMainMenu,
     askMenuOption,
     read(Input),

@@ -23,6 +23,9 @@ validateMove(l, NewMove) :-
 validateMove(r, NewMove) :-
     NewMove = 'r'.
 
+validateMove(s, NewMove) :-
+    NewMove = 's'.
+
 validateMove(_Move, NewMove) :-
     write('ERROR: That move is not valid!\n\n'),
     readMove(Input),
@@ -100,31 +103,46 @@ validateColumn(_Column, NewColumn) :-
     readColumn(Input),
     validateColumn(Input, NewColumn).
 
-validatePiece(Player, Row, Column, Board, N, R, C) :-
+validatePiece(Player, Row, Column, Board, N, R, C, P) :-
     getValueFromMatrix(Board, Row, Column, Value),
-    (Value == Player -> R is Row, C is Column ; write('\nYou can only select your pieces!\n'), write('Piece '), write(N), write(' of 3:\n'), manageRow(NewRow), manageColumn(NewColumn), validatePiece(Player, NewRow, NewColumn, Board, N, R, C)).
+    (Value == Player, \+ member([Row, Column], P) -> R is Row, C is Column ; write('\nYou can only select your pieces once!\n'), write('Piece '), write(N), write(' of 3:\n'), manageRow(NewRow), manageColumn(NewColumn), validatePiece(Player, NewRow, NewColumn, Board, N, R, C)).
 
 
-askForPiece(Player, Board, N, Row, Column) :-
+askForPiece(Player, Board, N, P, NewP) :-
     write('\nPiece '), write(N), write(' of 3:\n'),
     manageRow(NewRow),
     manageColumn(NewColumn),
-    validatePiece(Player, NewRow, NewColumn, Board, N, R, C),
-    Row is R,
-    Column is C.
+    validatePiece(Player, NewRow, NewColumn, Board, N, R, C, P),
+    append(P, [[R,C]], NewP).
 
 askForMove(Move) :-
-    write('\nChoose move (Diagonal Right [r] / Diagonal Left [l]): \n'),
+    write('\nChoose move (Diagonal Right [r] / Diagonal Left [l] / Reselect Pieces [s]): \n'),
     manageMove(NewMove),
     Move = NewMove.
 
+askForPlay(Player, Board, Pieces, Move) :-
+    printPlayerTurn(Player, P, Board),
+    askForPiece(Player, Board, 1, P, P1),
+    printPlayerTurn(Player, P1, Board),
+    askForPiece(Player, Board, 2, P1, P2),
+    printPlayerTurn(Player, P2, Board),
+    askForPiece(Player, Board, 3, P2, P3),
+    printPlayerTurn(Player, P3, Board),
+    askForMove(M),
+    (M == 's' -> askForPlay(Player, Board, Pieces, Move);
+        Move = M,
+        sort(P3, SortedPieces),
+        (Player == 'black' -> reverse(SortedPieces, Pieces); Pieces = SortedPieces)
+    ).
 
 
 
 
 
-
-
+compare_lists(L1, L2, R) :-
+    nth0(0, L1, E1),
+    nth0(0, L2, E2),
+    compare(R, E1, E2).
 
 
 
