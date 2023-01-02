@@ -1,4 +1,4 @@
-/*Representação da borda inicial.*/
+/*Representação do tabuleiro inicial.*/
 initialBoard([
                 [black,black,black,black,black],
             [empty,black,black,black,black,empty],
@@ -10,18 +10,6 @@ initialBoard([
             [empty,white,white,white,white,empty],
                 [white,white,white,white,white]
 ]).
-
-/*initialBoard([
-                [empty,empty,empty,empty,empty],
-            [empty,empty,empty,empty,empty,empty],
-        [empty,black,black,black,empty,empty,empty],
-    [empty,empty,white,white,white,empty,empty,empty],
-[empty,empty,empty,empty,empty,empty,empty,empty,empty],
-    [empty,empty,empty,empty,empty,empty,empty,empty],
-        [empty,empty,empty,empty,empty,empty,empty],
-            [empty,empty,empty,empty,empty,empty],
-                [empty,empty,empty,empty,empty]
-]).*/
 
 /*Símbolos que cada peça preta e branca ou nenhuma peça vão ter ao dar print do tabuleiro.*/
 symbol(empty,S) :- S=' '.
@@ -102,9 +90,13 @@ printPlayerTurn('white', Pieces, Board) :-
     printBoard(Board),
     write('\n--------------------- PLAYER O ---------------------\n'),
     write('                   (White Pieces)                   \n\n'),
-    printSelectedPieces(Pieces).
-    %getNumberOfPieces('white', Board, 0, NP),
-    %write('Number Of Pieces = '), write(NP),nl.
+    printSelectedPieces(Pieces),
+    getNumberOfPieces('white', Board, 0, NP),
+    write('Number Of Pieces = '), write(NP),nl,
+    write('Number Of Pieces removed = '),N is 12-NP, write(N),nl,
+    getNumberOfPieces('black', Board, 0, Num),
+    write('Number Of Pieces captured = '),Nm is 12-Num, write(Nm),nl.
+
 
     
 printPlayerTurn('black', Pieces, Board) :-
@@ -112,6 +104,10 @@ printPlayerTurn('black', Pieces, Board) :-
     printBoard(Board),
     write('\n--------------------- PLAYER X ---------------------\n'),
     write('                   (Black Pieces)                   \n\n'),
-    printSelectedPieces(Pieces).
-    %getNumberOfPieces('black', Board, 0, NP),
-    %write('Number Of Pieces = '), write(NP),nl.
+    printSelectedPieces(Pieces),
+    getNumberOfPieces('black', Board, 0, NP),
+    write('Number Of Pieces = '), write(NP),nl,
+    write('Number Of Pieces removed = '),N is 12-NP, write(N),nl,
+    getNumberOfPieces('white', Board, 0, Num),
+    write('Number Of Pieces captured = '),Nm is 12-Num, write(Nm),nl.
+
