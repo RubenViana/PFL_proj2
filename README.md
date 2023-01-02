@@ -149,7 +149,7 @@ Como já foi enaltecido acima é no fim de cada turno durante o loop que é veri
 O estado de jogo é avaliado constantemente durante o loop como já foi referido anteriormente. O estado do tabuleiro também vai sendo atualizado a cada turno como é possível observar abaixo.
 
 * #### **Exemplo de estado do tabuleiro durante o turno das brancas antes da jogada ser executada:**
-![Turno das brancas](/imgs/play2.png)
+![Turno das brancas](/imgs/play1.png)
 
 * #### **Exemplo de estado do tabuleiro (atualizado) depois da jogada do turno das brancas ter sido realizada (mudança de turnos, agora é o turno das pretas jogarem):**
 ![Turno das pretas](/imgs/play2.png)
