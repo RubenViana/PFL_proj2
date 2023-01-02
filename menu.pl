@@ -18,15 +18,21 @@ manageInput(2) :-
     sleep(3),
     mainMenu.
 
-/*Caso o input seja 3 ativa-se o modo de jogo computador contra computador.*/
+/*Caso o input seja 3 ativa-se o modo de jogo computador contra jogador.*/
 manageInput(3) :-
+    startGame('C','P'),
+    sleep(3),
+    mainMenu.
+
+/*Caso o input seja 4 ativa-se o modo de jogo computador contra computador.*/
+manageInput(4) :-
     startGame('C','C'),
     sleep(3),
     mainMenu.
 
 /*Caso o input seja 0 sai-se do jogo.*/
 manageInput(0) :-
-    write('\nExiting...\n\n').
+    write('\n...Exiting...\n\n').
 
 /*Caso o input não seja nenhum dos anteriores pede-se um novo input.*/
 manageInput(_Other) :-
@@ -56,7 +62,9 @@ printMainMenu :-
     write('|                                                                       |'),nl,
     write('|                          2. Player vs Computer                        |'),nl,
     write('|                                                                       |'),nl,
-	write('|                          3. Computer vs Computer                      |'),nl,
+	write('|                          3. Computer vs Player                        |'),nl,
+    write('|                                                                       |'),nl,
+    write('|                          4. Computer vs Computer                      |'),nl,
     write('|                                                                       |'),nl,
     write('|                          0. Exit                                      |'),nl,
     write('|                                                                       |'),nl,

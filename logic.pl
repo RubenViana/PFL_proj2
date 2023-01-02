@@ -7,12 +7,12 @@ startGame(PlayerWhites, PlayerBlacks) :-
 gameLoop(P1, P2, Board) :-
     whitePlayerTurn(Board, NewBoard, P1),
     (
-        (checkVictory('white', NewBoard), write('\nThanks for playing!\n'), printBoard(NewBoard));
-        (checkVictoryEmpty('black', NewBoard), write('\nWhite Wins!\n'), printBoard(NewBoard));
+        (checkVictory('white', NewBoard), write('\nThanks for playing!\n'), printWhiteWin(NewBoard));
+        (checkVictoryEmpty('black', NewBoard), write('\nWhite Wins!\n'), printWhiteWin(NewBoard));
         (blackPlayerTurn(NewBoard, NewNewBoard, P2),
             (
-                (checkVictory('black', NewNewBoard), write('\nThanks for playing!\n'), printBoard(NewNewBoard));
-                (checkVictoryEmpty('white', NewNewBoard), write('\nBlack Wins!\n'), printBoard(NewNewBoard));
+                (checkVictory('black', NewNewBoard), write('\nThanks for playing!\n'), printBlackWin(NewNewBoard));
+                (checkVictoryEmpty('white', NewNewBoard), write('\nBlack Wins!\n'), printBlackWin(NewNewBoard));
                 (gameLoop(P1, P2, NewNewBoard))
             )
         )
@@ -25,12 +25,26 @@ blackPlayerTurn(Board, NewBoard, 'P') :-
     askForPlay('black', NPieces, Board, Pieces, Move),
     checkMove('black', Board, Move, Pieces, NewBoard).
 
+blackPlayerTurn(Board, NewBoard, 'C') :-
+    getNumberOfPieces('black', Board, 0, NP),
+    (NP >= 3 -> NPieces = 3; NPieces = NP),
+    repeat,
+        generatePlay('black', NPieces, Board, Pieces, Move),
+        checkMove('black', Board, Move, Pieces, NewBoard), !.
+
 /*Turno das peças brancas.*/
 whitePlayerTurn(Board, NewBoard, 'P') :-
     getNumberOfPieces('white', Board, 0, NP),
     (NP >= 3 -> NPieces = 3; NPieces = NP),
     askForPlay('white', NPieces, Board, Pieces, Move),
     checkMove('white', Board, Move, Pieces, NewBoard).
+
+whitePlayerTurn(Board, NewBoard, 'C') :-
+    getNumberOfPieces('white', Board, 0, NP),
+    (NP >= 3 -> NPieces = 3; NPieces = NP),
+    repeat,
+        generatePlay('white', NPieces, Board, Pieces, Move),
+        checkMove('white', Board, Move, Pieces, NewBoard), !.
 
 /*Visualizar se exitem movimentos das peças brancas possíveis.*/
 
@@ -42,20 +56,17 @@ checkVictoryEmpty(Player, Board) :-
     NP == 0.
 
 /*Visualizar depois do turno das peças brancas se existe alguma peça branca na linha I.*/ 
-checkVictory('white', [H|T]) :-
+checkVictory('white', [H|_T]) :-
     line_member('white', H), write('\nWhite Pieces won!\n').
 
 /*Visualizar depois do turno das peças pretas se existe alguma peça preta na linha A.*/
-checkVictory('black', [H|T]) :- 
-    T == [] -> line_member('black', H); checkVictory('black', T), write('\nBlack Pieces won!\n').
+checkVictory('black', B) :-
+    nth0(8, B, L),
+    line_member('black', L), write('\nBlack Pieces won!\n').
 
 /*Função que verifica se determinado elemento está presente na linha*/
 line_member(X,[X|_]).
 line_member(X,[_|TAIL]) :- line_member(X,TAIL).
-
-/*Função que verifica se determinado elemento está presente no array*/
-memberArray(X, Y) :- line_member(X, Y).
-memberArray(X, [Y|Ys]) :- memberArray(X, Ys).
 
 /*Validação ou não validação do movimento da peça branca e execução deste.*/
 checkPieceMove('white', 'l', Board, R, C, BoardTmp, V) :-
