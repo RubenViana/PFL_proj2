@@ -17,12 +17,12 @@
 
 A instalação do SICStus Prolog 4.7.1 estava devidamente identificada e explicada no site da cadeira de PFL, na secção "Outros recursos".
 
-- **Windows:** Para a correta execução do jogo basta abrir o terminal no diretório do projeto e inserir (e executar) o seguinte comando : `start "C:\caminho\para\sicstus.exe"`.
+- **Windows:** Para a correta execução do jogo basta abrir o terminal no diretório `src` do projeto e inserir (e executar) o seguinte comando : `start "C:\caminho\para\sicstus.exe"`.
 
 * #### **Demonstração para windows abaixo:**
 ![Windows Start](/imgs/windows.png)
 
-- **Linux:** Para a correta execução do jogo basta abrir o terminal no diretório do projeto e inserir (e executar) o seguinte comando: `/caminho/para/bin/sicstus`.
+- **Linux:** Para a correta execução do jogo basta abrir o terminal no diretório `src` do projeto e inserir (e executar) o seguinte comando: `/caminho/para/bin/sicstus`.
 
 * #### **Demonstração para linux abaixo:**
 ![Linux Start](/imgs/linux.png)
@@ -111,12 +111,12 @@ Para começar o jogo e o seu loop usa-se o predicado de visualização startGame
 #### **Execução de Jogadas**: Validação e execução de uma jogada, obtendo o novo estado do jogo. O predicado deve chamar-se move(+GameState, +Move, -NewGameState).
 
 Para executar uma jogada, o jogador começa por selecionar as suas pedras (estas são validadas com `validatePiece`, ou seja, se existem no tabuleiro e se lhe pertencem). Depois, ao ser questionado (`askForMove`) seleciona o movimento que irá realizar (em frente, para a esquerda ou direita). No fim de terminado este último processo, a jogada está pronta a executar mas primeiro sofre validação (caso seja inválida é pedido um novo movimento, ou o jogador tem de recomeçar a sua jogada do início). Utiliza-se `checkMove` para validar essa jogada.
-No pedido de cada pedra, é questionado a linha e a coluna no tabuleiro desta como forma de encontrá-la (`askForPiece`). Tanto a linha como a coluna sofrem validação também (em casa de não respeitarem o input pretendido, é pedido que voltem a inserir um valor correto). Essa validação está presente no ficheiro `ìnput.pl`. Além disso, no fundo a jogada é o culminar da seleção de peças mais o movimento (`askForPlay`). 
+No pedido de cada pedra, é questionado a linha e a coluna no tabuleiro como forma de encontrá-la (`askForPiece`). Tanto a linha como a coluna sofrem validação também (em caso de não respeitarem o input pretendido, é pedido que voltem a inserir um valor correto). Essa validação e controlo está presente no ficheiro `ìnput.pl`. Além disso, no fundo uma jogada é o culminar da seleção de peças mais o movimento (`askForPlay`). 
 
-* #### **Pedras selecionadas:**
+* #### **Pedido de pedras e pedras selecionadas:**
 ![Pedras selecionadas](/imgs/pedrasSelec.png)
 
-* #### **Movimento selecionado:**
+* #### **Pedido de movimento e movimento selecionado:**
 ![Pedras selecionadas](/imgs/pedrasMove.png)
 
 * #### **Pedido das pedras e do movimento:**
@@ -131,11 +131,18 @@ No pedido de cada pedra, é questionado a linha e a coluna no tabuleiro desta co
 
 #### Lista de Jogadas Válidas: Obtenção de lista com jogadas possíveis. O predicado deve chamar-se valid_moves(+GameState, +Player, -ListOfMoves).
 
--
+A verificação das jogadas válidas decorre como foi mencionado acima (após o input) não existindo nenhuma lista para isso (ou seja, não existe nenhuma lista com as jogadas possíveis de se realizar no momento, o que é compreensível pois para 12 pedras teríamos de considerar 440 jogadas). O computador funciona de forma idêntica aos raciocínios anteriores só que escolhe uma jogada aleatória válida.
 
 #### Final do Jogo: Verificação do fim do jogo, com identificação do vencedor. O predicado deve chamar-se game_over(+GameState, -Winner).
 
--
+Como já foi enaltecido acima é no fim de cada turno durante o loop que é verificado o estado de jogo e identificado o jogador.  
+
+* #### **Exemplo de estado de vitória das pedras brancas por ausência de pedras pretas:**
+![Win](/imgs/estadoVitoria.png)
+
+* #### **Exemplo de estado de vitória das pedras brancas por chegar à casa das peças pretas:**
+![Win](/imgs/estadoVitoria.png)
+
 
 #### Avaliação do Tabuleiro: Forma(s) de avaliação do estado do jogo. O predicado deve chamar-se value(+GameState, +Player, -Value).
 
