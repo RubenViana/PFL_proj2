@@ -34,7 +34,7 @@ generatePlay(Player, 1, Board, Pieces, Move) :-
 
 /*Validação da pedra do Computador.*/
 validateBotPiece(Player, Row, Column, Board, P) :-
-    getValueFromMatrix(Board, Row, Column, Value), write(Player), write(Value), nl,
+    getValueFromMatrix(Board, Row, Column, Value),
     (Value == Player, \+ member([Row, Column], P)).
 
 /*Criar uma pedra Random.*/

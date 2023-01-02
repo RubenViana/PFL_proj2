@@ -1,5 +1,5 @@
 /*Representação da borda inicial.*/
-/*
+
 initialBoard([
                 [black,black,black,black,black],
             [empty,black,black,black,black,empty],
@@ -10,9 +10,9 @@ initialBoard([
         [empty,empty,white,white,white,empty,empty],
             [empty,white,white,white,white,empty],
                 [white,white,white,white,white]
-]).*/
+]).
 
-initialBoard([
+/*initialBoard([
                 [empty,empty,empty,empty,empty],
             [empty,empty,empty,empty,white,empty],
         [empty,black,black,black,empty,empty,empty],
@@ -22,7 +22,7 @@ initialBoard([
         [empty,empty,empty,empty,empty,empty,empty],
             [empty,empty,empty,empty,empty,empty],
                 [empty,empty,empty,empty,empty]
-]).
+]).*/
 
 /*Símbolos que cada peça preta e branca ou nenhuma peça vão ter ao dar print do tabuleiro.*/
 symbol(empty,S) :- S=' '.
