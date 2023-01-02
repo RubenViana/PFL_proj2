@@ -1,3 +1,4 @@
+/*função que dá print ao menu principal e questiona pela modo de jogo. */
 mainMenu :-
     cls,
     printMainMenu,
@@ -5,21 +6,26 @@ mainMenu :-
     read(Input),
     manageInput(Input).
 
+/*Caso o input seja 1 ativa-se o modo de jogo jogador contra jogador.*/
 manageInput(1) :-
     startGame('P','P'),
     mainMenu.
 
+/*Caso o input seja 2 ativa-se o modo de jogo jogador contra computador.*/
 manageInput(2) :-
     startGame('P','C'),
     mainMenu.
 
+/*Caso o input seja 3 ativa-se o modo de jogo computador contra computador.*/
 manageInput(3) :-
     startGame('C','C'),
     mainMenu.
 
+/*Caso o input seja 0 sai-se do jogo.*/
 manageInput(0) :-
     write('\nExiting...\n\n').
 
+/*Caso o input não seja nenhum dos anteriores pede-se um novo input.*/
 manageInput(_Other) :-
     write('\nERROR: that option does not exist.\n\n'),
     askMenuOption,
@@ -27,7 +33,7 @@ manageInput(_Other) :-
     manageInput(Input).
                      
 
-
+/*Função que mostra o que vai ser representado como menu principal.*/
 printMainMenu :-
     nl,nl,
     write(' _______________________________________________________________________ '),nl,
@@ -54,5 +60,6 @@ printMainMenu :-
     write('|                                                                       |'),nl,
     write('|_______________________________________________________________________|'),nl,nl,nl.
 
+/*Função que questiona a opção a escolher do menu principal.*/
 askMenuOption :-
     write('> Insert your option ').

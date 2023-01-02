@@ -1,4 +1,5 @@
-initialBoard([
+/*Representação da borda inicial.*/
+/*initialBoard([
                 [black,black,black,black,black],
             [empty,black,black,black,black,empty],
         [empty,empty,black,black,black,empty,empty],
@@ -8,12 +9,26 @@ initialBoard([
         [empty,empty,white,white,white,empty,empty],
             [empty,white,white,white,white,empty],
                 [white,white,white,white,white]
+]).*/
+
+initialBoard([
+                [empty,empty,empty,empty,empty],
+            [empty,empty,empty,empty,empty,empty],
+        [empty,black,black,black,empty,empty,empty],
+    [empty,empty,empty,empty,empty,empty,empty,empty],
+[empty,empty,empty,white,white,white,empty,empty,empty],
+    [empty,empty,empty,empty,empty,empty,empty,empty],
+        [empty,empty,empty,empty,empty,empty,empty],
+            [empty,empty,empty,empty,empty,empty],
+                [empty,empty,empty,empty,empty]
 ]).
 
+/*Símbolos que cada peça preta e branca ou nenhuma peça vão ter ao dar print do tabuleiro.*/
 symbol(empty,S) :- S=' '.
 symbol(black,S) :- S='X'.
 symbol(white,S) :- S='O'.
 
+/*Letras representantes das linhas do tabuleiro.*/
 letter(1, L) :- L='            I'.
 letter(2, L) :- L='          H'.
 letter(3, L) :- L='        G'.
@@ -24,7 +39,7 @@ letter(7, L) :- L='        C'.
 letter(8, L) :- L='          B'.
 letter(9, L) :- L='            A'.
 
-
+/*Print do tabuleiro.*/
 printBoard(X) :-
     nl,
     write('                  1   2   3   4   5  \n'),
@@ -62,7 +77,7 @@ printSep(7) :- write('\n            \\ / \\ / \\ / \\ / \\ / \\ / \\ / 7\n').
 printSep(8) :- write('\n              \\ / \\ / \\ / \\ / \\ / \\ / 6\n').
 printSep(9) :- write('\n                \\ / \\ / \\ / \\ / \\ /\n').
 
-
+/*Tradução do input para as linhas do tabuleiro.*/
 toLetter(8, S) :- S = 'A'.
 toLetter(7, S) :- S = 'B'.
 toLetter(6, S) :- S = 'C'.
@@ -73,6 +88,7 @@ toLetter(2, S) :- S = 'G'.
 toLetter(1, S) :- S = 'H'.
 toLetter(0, S) :- S = 'I'.
 
+/*Print das peçças selecionadas.*/
 printSelectedPieces(Pieces) :-
     write('             '),
     (foreach( X, Pieces) do nth0(0, X, R), nth0(1, X, C), toLetter(R, S), write('  <'), write(S), write('-'), Cc is C + 1, write(Cc), write('>  ')),
@@ -80,6 +96,7 @@ printSelectedPieces(Pieces) :-
 
 cls :- write('\33\[2J').
 
+/*Print do turno*/
 printPlayerTurn('white', Pieces, Board) :-
     cls,
     printBoard(Board),
