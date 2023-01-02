@@ -1,5 +1,5 @@
 /*Representação da borda inicial.*/
-/*initialBoard([
+initialBoard([
                 [black,black,black,black,black],
             [empty,black,black,black,black,empty],
         [empty,empty,black,black,black,empty,empty],
@@ -9,19 +9,19 @@
         [empty,empty,white,white,white,empty,empty],
             [empty,white,white,white,white,empty],
                 [white,white,white,white,white]
-]).*/
+]).
 
-initialBoard([
+/*initialBoard([
                 [empty,empty,empty,empty,empty],
             [empty,empty,empty,empty,empty,empty],
         [empty,black,black,black,empty,empty,empty],
-    [empty,empty,empty,empty,empty,empty,empty,empty],
-[empty,empty,empty,white,white,white,empty,empty,empty],
+    [empty,empty,white,white,white,empty,empty,empty],
+[empty,empty,empty,empty,empty,empty,empty,empty,empty],
     [empty,empty,empty,empty,empty,empty,empty,empty],
         [empty,empty,empty,empty,empty,empty,empty],
             [empty,empty,empty,empty,empty,empty],
                 [empty,empty,empty,empty,empty]
-]).
+]).*/
 
 /*Símbolos que cada peça preta e branca ou nenhuma peça vão ter ao dar print do tabuleiro.*/
 symbol(empty,S) :- S=' '.
@@ -103,6 +103,8 @@ printPlayerTurn('white', Pieces, Board) :-
     write('\n--------------------- PLAYER O ---------------------\n'),
     write('                   (White Pieces)                   \n\n'),
     printSelectedPieces(Pieces).
+    %getNumberOfPieces('white', Board, 0, NP),
+    %write('Number Of Pieces = '), write(NP),nl.
 
     
 printPlayerTurn('black', Pieces, Board) :-
@@ -111,3 +113,5 @@ printPlayerTurn('black', Pieces, Board) :-
     write('\n--------------------- PLAYER X ---------------------\n'),
     write('                   (Black Pieces)                   \n\n'),
     printSelectedPieces(Pieces).
+    %getNumberOfPieces('black', Board, 0, NP),
+    %write('Number Of Pieces = '), write(NP),nl.
