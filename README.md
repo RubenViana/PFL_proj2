@@ -51,10 +51,10 @@ Para carregar o jogo basta inserir e executar o seguinte comando como feito abai
 
 Dentro do menu principal escolhe-mos um dos três modos de jogo (1 - Jogador vs Jogador, 2 - Jogador vs Computador, 3 - Computador vs Jogador ou 4 - Computador vs Computador) ou optamos por sair (Opção 0).
 
-* #### **Predicado de início de jogo play (chama a função mainMenu para dar display do Menu principal):**
+* #### **Predicado de início de jogo play (chama o predicado mainMenu para dar display do Menu principal):**
 ![Jogar](/imgs/play.png)
 
-* #### **Função mainMenu e display do Menu principal:**
+* #### **Predicado mainMenu e display do Menu principal:**
 ![Menu](/imgs/menuCode.png)
 ![Menu principal](/imgs/menuPrincipal.png)
 
@@ -129,34 +129,44 @@ No pedido de cada pedra, é questionado a linha e a coluna no tabuleiro como for
 ![Validação da jogada](/imgs/valJogada.png)
 
 
-#### Lista de Jogadas Válidas: Obtenção de lista com jogadas possíveis. O predicado deve chamar-se valid_moves(+GameState, +Player, -ListOfMoves).
+#### **Lista de Jogadas Válidas:** Obtenção de lista com jogadas possíveis. O predicado deve chamar-se valid_moves(+GameState, +Player, -ListOfMoves).
 
 A verificação das jogadas válidas decorre como foi mencionado acima (após o input) não existindo nenhuma lista para isso (ou seja, não existe nenhuma lista com as jogadas possíveis de se realizar no momento, o que é compreensível pois para 12 pedras teríamos de considerar 440 jogadas). O computador funciona de forma idêntica aos raciocínios anteriores só que escolhe uma jogada aleatória válida.
 
-#### Final do Jogo: Verificação do fim do jogo, com identificação do vencedor. O predicado deve chamar-se game_over(+GameState, -Winner).
+#### **Final do Jogo:** Verificação do fim do jogo, com identificação do vencedor. O predicado deve chamar-se game_over(+GameState, -Winner).
 
-Como já foi enaltecido acima é no fim de cada turno durante o loop que é verificado o estado de jogo e identificado o jogador.  
+Como já foi enaltecido acima é no fim de cada turno durante o loop que é verificado o estado de jogo e identificado o vencedor caso haja motivo para vitória.  
 
 * #### **Exemplo de estado de vitória das pedras brancas por ausência de pedras pretas:**
 ![Win](/imgs/estadoVitoria.png)
 
 * #### **Exemplo de estado de vitória das pedras brancas por chegar à casa das peças pretas:**
-![Win](/imgs/estadoVitoria.png)
+![Win](/imgs/win.png)
 
 
-#### Avaliação do Tabuleiro: Forma(s) de avaliação do estado do jogo. O predicado deve chamar-se value(+GameState, +Player, -Value).
+#### **Avaliação do Tabuleiro:** Forma(s) de avaliação do estado do jogo. O predicado deve chamar-se value(+GameState, +Player, -Value).
 
--
+O estado de jogo é avaliado constantemente durante o loop como já foi referido anteriormente. O estado do tabuleiro também vai sendo atualizado a cada turno como é possível observar abaixo.
 
-#### Jogada do Computador: Escolha da jogada a efetuar pelo computador, dependendo do nível de dificuldade. O predicado deve chamar-se choose_move(+GameState, +Player, +Level, -Move). O nível 1 deverá devolver uma jogada válida aleatória. O nível 2 deverá devolver a melhor jogada no momento (algoritmo greedy), tendo em conta a avaliação do estado de jogo.
+* #### **Exemplo de estado do tabuleiro durante o turno das brancas antes da jogada ser executada:**
+![Turno das brancas](/imgs/play2.png)
 
--
-
-### Conclusões: Conclusões do trabalho, incluindo limitações do trabalho desenvolvido (known issues), assim como possíveis melhorias identificadas (roadmap) (até 250 palavras).
-
+* #### **Exemplo de estado do tabuleiro (atualizado) depois da jogada do turno das brancas ter sido realizada (mudança de turnos, agora é o turno das pretas jogarem):**
+![Turno das pretas](/imgs/play2.png)
 
 
-### Bibliografia: Listagem de livros, artigos, páginas Web e outros recursos usados durante o desenvolvimento do trabalho.
+#### **Jogada do Computador:** Escolha da jogada a efetuar pelo computador, dependendo do nível de dificuldade. O predicado deve chamar-se choose_move(+GameState, +Player, +Level, -Move). O nível 1 deverá devolver uma jogada válida aleatória. O nível 2 deverá devolver a melhor jogada no momento (algoritmo greedy), tendo em conta a avaliação do estado de jogo.
+
+Infelizmente só foi realizado o nível 1 como já foi referido acima. O predicado chama-se `generatePlay` no nosso caso. Basicamente, vai escolhendo peças e movimentos aleatórios até que dê resultado numa jogada válida como se pode ver no código abaixo.
+
+* #### **Criar uma jogada aleatória:**
+![Bot play](/imgs/botPlay.png)
+
+### **Conclusões:** Conclusões do trabalho, incluindo limitações do trabalho desenvolvido (known issues), assim como possíveis melhorias identificadas (roadmap) (até 250 palavras).
+
+Em suma, conseguiu-se realizar um projeto minimamente sólido capaz de retratar a aprendizagem dos conteúdos das aulas práticas e teóricas. O facto de ser uma linguagem declarativa é sempre mais desafiante pois não estamos tão habituados e faz com que pensamos mais no problema. Sentimos que ainda existia espaço para melhorias, como há sempre, mas o tempo escasso e agenda ocupada tal não permitiu. Pretendíamos fazer com que o tabuleiro tivesse tamanhos diferentes, mas ficamos pelo original pois o facto de ser hexagonal já o torna algo complexo e difícil. Além disso, pretendíamos saber o número de jogadas possíveis e quais a cada instante (único modo de vitória não verificado, ausência de jogadas possíveis), só que devido aos diversos fatores não conseguimos explorar o suficiente para arranjar uma forma eficiente de analisar tantas combinações. O mesmo se aplica para o nível 2 dos robots, que na nossa opinião necessitaria de uma pesquisa exaustiva de algoritmos mais complexos, pois o algoritmo greedy não parece fazer muito sentido no nosso caso. Concluindo, estamos satisfeitos com o que está realizado, achamos que está um jogo com uma interação com o utilizador cativante e amigável.
+
+### **Bibliografia:** Listagem de livros, artigos, páginas Web e outros recursos usados durante o desenvolvimento do trabalho.
 
 - [Todas as informações sobre o jogo foram retiradas do site igGameCenter na secção do jogo Taacoca.](https://www.iggamecenter.com/en/rules/taacoca "Site igGameCenter, secção Taacoca")
 - [Também começamos alguns jogos entre nós para entender melhor a dinâmica do jogo em primeira mão.](https://www.iggamecenter.com/en/ "Site igGmaeCenter")
