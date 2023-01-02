@@ -104,7 +104,10 @@ printPlayerTurn('white', Pieces, Board) :-
     write('                   (White Pieces)                   \n\n'),
     printSelectedPieces(Pieces).
     %getNumberOfPieces('white', Board, 0, NP),
-    %write('Number Of Pieces = '), write(NP),nl.
+    %write('Number Of Pieces = '), write(NP),nl,
+    %write('Number Of Pieces removed = '),N is 12-NP, write(N),nl,
+    %getNumberOfPieces('black', Board, 0, Num),
+    %write('Number Of Pieces captured = '),Nm is 12-Num, write(Nm),nl.
 
     
 printPlayerTurn('black', Pieces, Board) :-
@@ -114,7 +117,10 @@ printPlayerTurn('black', Pieces, Board) :-
     write('                   (Black Pieces)                   \n\n'),
     printSelectedPieces(Pieces).
     %getNumberOfPieces('black', Board, 0, NP),
-    %write('Number Of Pieces = '), write(NP),nl.
+    %write('Number Of Pieces = '), write(NP),nl,
+    %write('Number Of Pieces removed = '),N is 12-NP, write(N),nl,
+    %getNumberOfPieces('white', Board, 0, Num),
+    %write('Number Of Pieces captured = '),Nm is 12-Num, write(Nm),nl.
 
 printWhiteWin(Board) :-
     cls,
