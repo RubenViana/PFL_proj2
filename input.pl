@@ -132,7 +132,7 @@ askForMove(Move) :-
     manageMove(NewMove),
     Move = NewMove.
 
-/*Pedido de jogada.*/
+/*Pedido de jogada para os diferentes números de pedras que o jogador tiver (>=3, 2 ou 1 pedras).*/
 askForPlay(Player, 3, Board, Pieces, Move) :-
     printPlayerTurn(Player, P, Board),
     askForPiece(Player, Board, 1, P, P1, 3),
@@ -172,6 +172,7 @@ askForPlay(Player, 1, Board, Pieces, Move) :-
         (Player == 'black' -> reverse(SortedPieces, Pieces); Pieces = SortedPieces)
     ).
 
+/*Obtenção do número de pedras pretas ou brancas no tabuleiro.*/
 getNumberOfPiecesLine(_Player, [], NP, NF) :- NF = NP.
 
 getNumberOfPiecesLine(Player, [H|T], NP, NF) :-

@@ -10,8 +10,8 @@ initialBoard([
             [empty,white,white,white,white,empty],
                 [white,white,white,white,white]
 ]).
-
-/*initialBoard([
+/*
+initialBoard([
                 [empty,empty,empty,empty,empty],
             [empty,empty,empty,empty,empty,empty],
         [empty,black,black,black,empty,empty,empty],
@@ -122,6 +122,7 @@ printPlayerTurn('black', Pieces, Board) :-
     %getNumberOfPieces('white', Board, 0, Num),
     %write('Number Of Pieces captured = '),Nm is 12-Num, write(Nm),nl.
 
+/*Print da vitória*/
 printWhiteWin(Board) :-
     cls,
     printBoard(Board),

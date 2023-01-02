@@ -49,6 +49,8 @@ Para carregar o jogo basta inserir e executar o seguinte comando como feito abai
 
 ### Lógica do Jogo: Descrever (não basta copiar o código fonte) o projeto e implementação da lógica do jogo em Prolog. O predicado de início de jogo deve ser play/0. Esta secção deve ter informação sobre os seguintes tópicos (até 2400 palavras no total):
 
+Dentro do menu principal escolhe-mos um dos três modos de jogo (1 - Jogador vs Jogador, 2 - Jogador vs Computador, 3 - Computador vs Jogador ou 4 - Computador vs Computador) ou optamos por sair (Opção 0).
+
 * #### **Predicado de início de jogo play (chama a função mainMenu para dar display do Menu principal):**
 ![Jogar](/imgs/play.png)
 
@@ -56,14 +58,12 @@ Para carregar o jogo basta inserir e executar o seguinte comando como feito abai
 ![Menu](/imgs/menuCode.png)
 ![Menu principal](/imgs/menuPrincipal.png)
 
-Dentro do menu principal escolhe-mos um dos três modos de jogo (1 - Jogador vs Jogador, 2 - Jogador vs Computador ou 3 - Computador vs Computador) ou optamos por sair (Opção 0).
-
 ####  **Representação interna do estado do jogo:** indicação de como representam o estado do jogo, incluindo tabuleiro (tipicamente usando lista de listas com diferentes átomos para as peças), jogador atual, e eventualmente peças capturadas e/ou ainda por jogar, ou outras informações que possam ser necessárias (dependendo do jogo). Deve incluir exemplos da representação em Prolog de estados de jogo inicial, intermédio e final, e indicação do significado de cada átomo (ie., como representam as diferentes peças):
+
+Como se pode ver abaixo durante a jogada é disponibilizado o estado do tabuleiro no instante, o jogador atual (neste caso o das pedras pretas), o número de peças que ainda tem em jogo, o número de peças que lhe foram removidas, o número de peças que capturou (removeu do adversário), as peças selecionadas até ao momento e a opção de escolha do movimento (ao fim de selecionar as peças).
 
 * #### **Representação de alguma informação disponibilizada durante as jogadas:**
 ![Informação importante](/imgs/information.png)
-
-Como se pode ver acima durante a jogada é disponibilizado o estado do tabuleiro no instante, o jogador atual (neste caso o das pedras pretas), o número de peças que ainda tem em jogo, o número de peças que lhe foram removidas, o número de peças que capturou (removeu do adversário), as peças selecionadas até ao momento e a opção de escolha do movimento (ao fim de selecionar as peças).
 
 * #### **Representação do tabuleiro inicial como uma lista de listas:**
 ![Tabuleiro inical](/imgs/tabuleiroInicial.png)
@@ -95,14 +95,39 @@ O sistema de menus e suas opções já foi descrito acima assim como a sua inter
 é dado um aviso de erro (input não é válido) e é pedido que escolha uma opção novamente.
 
 * #### **Validação do input (caso de erro):**
-![Input inválido menu](/imgs/inputError.png)
 ![Pedido de novo input](/imgs/newOpt.png)
+![Input inválido menu](/imgs/inputError.png)
 
+Para começar o jogo e o seu loop usa-se o predicado de visualização startGame (é como se fosse o nosso display_Game), que recebe os representantes das peças brancas e pretas, inicía o tabuleiro e chama gameLoop (que vai controlar os turnos dos jogadores e verificar o estado do jogo).
 
+* #### **Display e controlo dos estados do jogo:**
+![Display](/imgs/turnos.png)
 
-#### Execução de Jogadas: Validação e execução de uma jogada, obtendo o novo estado do jogo. O predicado deve chamar-se move(+GameState, +Move, -NewGameState).
+* #### **Exemplo de estado de vitória das pedras brancas por ausência de pedras pretas:**
+![Win](/imgs/estadoVitoria.png)
 
--
+É de notar que após algum tempo depois de um jogo acabar porque um dos lados ganhou volta-se ao menu (Neste jogo não há empates). Além disso, tentou-se tornar a visualização do jogo o mais apelativa e intuitiva possível.
+
+#### **Execução de Jogadas**: Validação e execução de uma jogada, obtendo o novo estado do jogo. O predicado deve chamar-se move(+GameState, +Move, -NewGameState).
+
+Para executar uma jogada, o jogador começa por selecionar as suas pedras (estas são validadas com `validatePiece`, ou seja, se existem no tabuleiro e se lhe pertencem). Depois, ao ser questionado (`askForMove`) seleciona o movimento que irá realizar (em frente, para a esquerda ou direita). No fim de terminado este último processo, a jogada está pronta a executar mas primeiro sofre validação (caso seja inválida é pedido um novo movimento, ou o jogador tem de recomeçar a sua jogada do início). Utiliza-se `checkMove` para validar essa jogada.
+No pedido de cada pedra, é questionado a linha e a coluna no tabuleiro desta como forma de encontrá-la (`askForPiece`). Tanto a linha como a coluna sofrem validação também (em casa de não respeitarem o input pretendido, é pedido que voltem a inserir um valor correto). Essa validação está presente no ficheiro `ìnput.pl`. Além disso, no fundo a jogada é o culminar da seleção de peças mais o movimento (`askForPlay`). 
+
+* #### **Pedras selecionadas:**
+![Pedras selecionadas](/imgs/pedrasSelec.png)
+
+* #### **Movimento selecionado:**
+![Pedras selecionadas](/imgs/pedrasMove.png)
+
+* #### **Pedido das pedras e do movimento:**
+![Pedido das pedras e do movimento](/imgs/pedidoPedrasMov.png)
+
+* #### **Validação das pedras:**
+![Validação das pedras](/imgs/valPedra.png)
+
+* #### **Validação da jogada:**
+![Validação da jogada](/imgs/valJogada.png)
+
 
 #### Lista de Jogadas Válidas: Obtenção de lista com jogadas possíveis. O predicado deve chamar-se valid_moves(+GameState, +Player, -ListOfMoves).
 

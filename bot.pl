@@ -1,3 +1,4 @@
+/*Criação de jogada para os diferentes números de pedras que o Computador tiver (>=3, 2 ou 1 pedras).*/
 generatePlay(Player, 3, Board, Pieces, Move) :-
     printPlayerTurn(Player, P, Board),
     generatePiece(Player, Board, P, P1),
@@ -31,10 +32,12 @@ generatePlay(Player, 1, Board, Pieces, Move) :-
     sort(P1, SortedPieces),
     (Player == 'black' -> reverse(SortedPieces, Pieces); Pieces = SortedPieces).
 
+/*Validação da pedra do Computador.*/
 validateBotPiece(Player, Row, Column, Board, P) :-
     getValueFromMatrix(Board, Row, Column, Value), write(Player), write(Value), nl,
     (Value == Player, \+ member([Row, Column], P)).
 
+/*Criar uma pedra Random.*/
 generatePiece(Player, Board, P, NewP) :-
     repeat,
         random(0, 9, RandomRow),
