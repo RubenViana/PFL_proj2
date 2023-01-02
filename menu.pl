@@ -9,16 +9,19 @@ mainMenu :-
 /*Caso o input seja 1 ativa-se o modo de jogo jogador contra jogador.*/
 manageInput(1) :-
     startGame('P','P'),
+    sleep(3),
     mainMenu.
 
 /*Caso o input seja 2 ativa-se o modo de jogo jogador contra computador.*/
 manageInput(2) :-
     startGame('P','C'),
+    sleep(3),
     mainMenu.
 
 /*Caso o input seja 3 ativa-se o modo de jogo computador contra computador.*/
 manageInput(3) :-
     startGame('C','C'),
+    sleep(3),
     mainMenu.
 
 /*Caso o input seja 0 sai-se do jogo.*/

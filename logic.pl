@@ -8,45 +8,38 @@ gameLoop(P1, P2, Board) :-
     whitePlayerTurn(Board, NewBoard, P1),
     (
         (checkVictory('white', NewBoard), write('\nThanks for playing!\n'), printBoard(NewBoard));
-        (checkVictoryEmpty('black', NewBoard), write('\nThanks for playing 1!\n'), printBoard(NewBoard));
+        (checkVictoryEmpty('black', NewBoard), write('\nWhite Wins!\n'), printBoard(NewBoard));
         (blackPlayerTurn(NewBoard, NewNewBoard, P2),
             (
                 (checkVictory('black', NewNewBoard), write('\nThanks for playing!\n'), printBoard(NewNewBoard));
-                (checkVictoryEmpty('white', NewNewBoard), write('\nThanks for playing 1!\n'), printBoard(NewNewBoard));
+                (checkVictoryEmpty('white', NewNewBoard), write('\nBlack Wins!\n'), printBoard(NewNewBoard));
                 (gameLoop(P1, P2, NewNewBoard))
             )
         )
     ).    
 
-/*Turno das peças brancas.*/
+/*Turno das peças pretas.*/
 blackPlayerTurn(Board, NewBoard, 'P') :-
-    cls,
-    printBoard(Board),
-    write('\n--------------------- PLAYER X ---------------------\n'),
-    write('                   (Black Pieces)                   \n\n'),
-    askForPlay('black', Board, Pieces, Move),
+    getNumberOfPieces('black', Board, 0, NP),
+    (NP >= 3 -> NPieces = 3; NPieces = NP),
+    askForPlay('black', NPieces, Board, Pieces, Move),
     checkMove('black', Board, Move, Pieces, NewBoard).
 
-/*Turno das peças pretas.*/
+/*Turno das peças brancas.*/
 whitePlayerTurn(Board, NewBoard, 'P') :-
-    cls,
-    printBoard(Board),
-    write('\n--------------------- PLAYER O ---------------------\n'),
-    write('                   (White Pieces)                   \n\n'),
-    askForPlay('white', Board, Pieces, Move),
+    getNumberOfPieces('white', Board, 0, NP),
+    (NP >= 3 -> NPieces = 3; NPieces = NP),
+    askForPlay('white', NPieces, Board, Pieces, Move),
     checkMove('white', Board, Move, Pieces, NewBoard).
 
 /*Visualizar se exitem movimentos das peças brancas possíveis.*/
 
 /*Visualizar se exitem movimentos das peças pretas possíveis.*/
 
-/*Visualizar se exitem peças brancas na board.*/  
-checkVictoryEmpty('white', Board) :-
-    memberArray('white', Board) == false, write('\nBlack Pieces won!\n').
-
-/*Visualizar se exitem peças pretas na board.*/    
-checkVictoryEmpty('black', Board) :-
-    memberArray('black', Board) == false, write('\nWhite Pieces won!\n').
+/*Visualizar se exitem peças brancas ou pretas na board.*/  
+checkVictoryEmpty(Player, Board) :-
+    getNumberOfPieces(Player, Board, 0, NP),
+    NP == 0.
 
 /*Visualizar depois do turno das peças brancas se existe alguma peça branca na linha I.*/ 
 checkVictory('white', [H|T]) :-

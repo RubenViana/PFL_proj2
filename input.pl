@@ -119,8 +119,8 @@ validatePiece(Player, Row, Column, Board, N, R, C, P) :-
     (Value == Player, \+ member([Row, Column], P) -> R is Row, C is Column ; write('\nYou can only select your pieces once!\n'), write('Piece '), write(N), write(' of 3:\n'), manageRow(NewRow), manageColumn(NewColumn), validatePiece(Player, NewRow, NewColumn, Board, N, R, C, P)).
 
 /*Pedido de seleção de uma peça.*/
-askForPiece(Player, Board, N, P, NewP) :-
-    write('\nPiece '), write(N), write(' of 3:\n'),
+askForPiece(Player, Board, N, P, NewP, NP) :-
+    write('\nPiece '), write(N), write(' of '), write(NP), write(':\n'),
     manageRow(NewRow),
     manageColumn(NewColumn),
     validatePiece(Player, NewRow, NewColumn, Board, N, R, C, P),
@@ -133,30 +133,62 @@ askForMove(Move) :-
     Move = NewMove.
 
 /*Pedido de jogada.*/
-askForPlay(Player, Board, Pieces, Move) :-
+askForPlay(Player, 3, Board, Pieces, Move) :-
     printPlayerTurn(Player, P, Board),
-    askForPiece(Player, Board, 1, P, P1),
+    askForPiece(Player, Board, 1, P, P1, 3),
     printPlayerTurn(Player, P1, Board),
-    askForPiece(Player, Board, 2, P1, P2),
+    askForPiece(Player, Board, 2, P1, P2, 3),
     printPlayerTurn(Player, P2, Board),
-    askForPiece(Player, Board, 3, P2, P3),
+    askForPiece(Player, Board, 3, P2, P3, 3),
     printPlayerTurn(Player, P3, Board),
     askForMove(M),
-    (M == 's' -> askForPlay(Player, Board, Pieces, Move);
+    (M == 's' -> askForPlay(Player, 3, Board, Pieces, Move);
         Move = M,
         sort(P3, SortedPieces),
         (Player == 'black' -> reverse(SortedPieces, Pieces); Pieces = SortedPieces)
     ).
 
+askForPlay(Player, 2, Board, Pieces, Move) :-
+    printPlayerTurn(Player, P, Board),
+    askForPiece(Player, Board, 1, P, P1, 2),
+    printPlayerTurn(Player, P1, Board),
+    askForPiece(Player, Board, 2, P1, P2, 2),
+    printPlayerTurn(Player, P2, Board),
+    askForMove(M),
+    (M == 's' -> askForPlay(Player, 2, Board, Pieces, Move);
+        Move = M,
+        sort(P2, SortedPieces),
+        (Player == 'black' -> reverse(SortedPieces, Pieces); Pieces = SortedPieces)
+    ).
 
+askForPlay(Player, 1, Board, Pieces, Move) :-
+    printPlayerTurn(Player, P, Board),
+    askForPiece(Player, Board, 1, P, P1, 1),
+    printPlayerTurn(Player, P1, Board),
+    askForMove(M),
+    (M == 's' -> askForPlay(Player, 1, Board, Pieces, Move);
+        Move = M,
+        sort(P1, SortedPieces),
+        (Player == 'black' -> reverse(SortedPieces, Pieces); Pieces = SortedPieces)
+    ).
 
+getNumberOfPiecesLine(_Player, [], NP, NF) :- NF = NP.
+
+getNumberOfPiecesLine(Player, [H|T], NP, NF) :-
+    (Player == H -> N is NP + 1; N is NP),
+    getNumberOfPiecesLine(Player, T, N, NF).
+
+getNumberOfPieces(_Player, [], NumberPieces, NP) :- NP = NumberPieces.
+
+getNumberOfPieces(Player, [H|T], NumberPieces, NP) :-
+    getNumberOfPiecesLine(Player, H, NumberPieces, NF),
+    getNumberOfPieces(Player, T, NF, NP).
 
 /*Comparação entre duas listas.*/
 compare_lists(L1, L2, R) :-
     nth0(0, L1, E1),
     nth0(0, L2, E2),
     compare(R, E1, E2).
-
 
 /*Substituição na lista pelo valor dado (peça ou não peça) em determinada posição*/
 replaceInList([_H|T], 0, Value, [Value|T]).
