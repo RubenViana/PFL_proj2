@@ -127,4 +127,3 @@ printBlackWin(Board) :-
     printBoard(Board),
     write('\n------------------- PLAYER X WINS -------------------\n'),
     write('                   (Black Pieces)                   \n\n').
-    
