@@ -115,3 +115,15 @@ printPlayerTurn('black', Pieces, Board) :-
     printSelectedPieces(Pieces).
     %getNumberOfPieces('black', Board, 0, NP),
     %write('Number Of Pieces = '), write(NP),nl.
+
+printWhiteWin(Board) :-
+    cls,
+    printBoard(Board),
+    write('\n------------------- PLAYER O WINS -------------------\n'),
+    write('                   (White Pieces)                   \n\n').
+
+printBlackWin(Board) :-
+    cls,
+    printBoard(Board),
+    write('\n------------------- PLAYER X WINS -------------------\n'),
+    write('                   (Black Pieces)                   \n\n').
